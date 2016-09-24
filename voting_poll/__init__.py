@@ -1,0 +1,1 @@
+default_app_config = 'voting_poll.apps.VotingPollConfig'
