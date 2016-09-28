@@ -1,0 +1,45 @@
+{% load voting_poll %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>voting</title>
+    </head>
+    <body>
+        {% if ShowStats %}
+            tu ya votaste ctmr
+        {% endif %}
+        {% if Success %}
+            Gracias por votar
+        {% else %}
+            {% if Poll.is_outstanding %}
+                <div>
+                    Aun La Pregunta no esta Disponible
+                </div>
+            {% elif Poll.is_active and not ShowStats %}
+            <h2>
+                {{ Poll.question }}
+            </h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {% with stats=Poll.stats %}
+                        {% for answer in Poll.question.answers.all%}
+                        <li><input type="radio" name="answer" value="{{answer.id}}" required>{{answer}}</li>
+                        {% endfor %}
+                    {% endwith %}
+                    <input type="submit" value="Votar" name="">
+                </form>
+            {% elif Poll.is_over or ShowStats %}
+                <h2>
+                {{ Poll.question }}
+                </h2>
+                <ul>
+                    {% with stats=Poll.stats %}
+                        {% for answer in Poll.question.answers.all %}
+                        <li>{{answer}} ({{ stats|get_item:'answers'|get_item:answer|get_item:'percentage'|floatformat }}%)</li>
+                        {% endfor %}
+                    {% endwith %}
+                </ul>
+            {% endif %}
+        {% endif %}
+    </body>
+</html>

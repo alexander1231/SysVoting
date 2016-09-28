@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sistema de Votaciones</title>
+    </head>
+    <body>
+
+    <H2> <center>
+     
+Bienvenido a la plataforma de votaciones
+</center>
+</h2>
+</div> 
+
+</marquee> </center>
+</h2>
+<h1>
+        {% for poll in Polls %}
+            <div><li>
+              <ol> <a href="{{ poll.get_absolute_url }}">{{ poll.question }}</a></ol>
+            </li>
+            </div>
+        {% endfor %}
+    </h1>
+    </body>
+</html>
